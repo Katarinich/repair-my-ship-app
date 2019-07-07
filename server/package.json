@@ -6,7 +6,8 @@
   "author": "Katarinich",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "echo test"
   },
   "dependencies": {
     "apollo-server-express": "1",
