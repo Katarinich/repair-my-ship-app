@@ -19,7 +19,7 @@ jobs:
           secure: $HEROKU_AUTH_TOKEN
         app: repair-my-ship
     - stage: server
-      before_install: cd ../server
+      before_install: cd server
       install: yarn
       deploy:
         provider: heroku
