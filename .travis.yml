@@ -4,13 +4,17 @@ node_js:
 cache:
   directories:
   - node_modules
-before_install: cd client
-install: yarn
-script:
-  - yarn test
-  - yarn build
-deploy:
-  provider: heroku
-  api_key:
-    secure: "1d17d2cf-8d58-47ac-9f51-9ac430fe2ba9"
-  app: repair-my-ship
+
+jobs:
+  include:
+    - stage: client
+      before_install: cd client
+      install: yarn
+      script:
+        - yarn test
+        - yarn build
+      deploy:
+        provider: heroku
+        api_key:
+          secure: $HEROKU_AUTH_TOKEN
+        app: repair-my-ship
