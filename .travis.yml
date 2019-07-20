@@ -14,10 +14,18 @@ jobs:
         - yarn test
         - yarn build
       deploy:
-        provider: heroku
-        api_key:
-          secure: $HEROKU_AUTH_TOKEN
-        app: repair-my-ship
+        - provider: heroku
+          api_key:
+            secure: $HEROKU_AUTH_TOKEN
+          app: repair-my-ship
+          on: 
+            branch: master
+        - provider: heroku
+          api_key:
+            secure: $HEROKU_AUTH_TOKEN
+          app: repair-my-ship-staging
+          on: 
+            branch: develop
     - stage: server
       before_install: cd server
       install: yarn
