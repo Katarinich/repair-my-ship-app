@@ -9,6 +9,7 @@
 * Implement server
   * Connect mongodb
   * Setup GraphQL
+  * Setup JWT Auth
   * Setup security https://medium.com/@nodepractices/were-under-attack-23-node-js-security-best-practices-e33c146cb87d
 
 * Implement client
