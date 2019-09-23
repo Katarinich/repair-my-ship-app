@@ -30,7 +30,13 @@ jobs:
       before_install: cd server
       install: yarn
       deploy:
-        provider: heroku
-        api_key:
-          secure: $HEROKU_AUTH_TOKEN
-        app: repair-my-ship-api
+        - provider: heroku
+          api_key:
+            secure: $HEROKU_AUTH_TOKEN
+          app: repair-my-ship-api
+        - provider: heroku
+          api_key:
+            secure: $HEROKU_AUTH_TOKEN
+          app: repair-my-ship-staging-api
+          on: 
+            branch: develop
