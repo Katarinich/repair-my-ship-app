@@ -38,7 +38,7 @@ server.applyMiddleware({ app, path: '/graphql' });
 
 const port = process.env.PORT || 8000;
 
-connectDb().then(async () => {
+connectDb().then(() => {
   app.listen({ port }, () => {
     console.log(`Apollo Server on http://localhost:${port}/graphql`);
   });
