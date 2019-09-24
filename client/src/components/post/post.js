@@ -1,12 +1,29 @@
-import React from "react";
+import React from 'react';
+import moment from 'moment';
+import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-import "./post.scss";
+import './post.scss';
 
-const Post = () => (
-  <div className="post">
-    <div className="post__title">A Post Title</div>
-    <div className="post__content">A Post Content</div>
-  </div>
-);
+const useStyles = makeStyles(theme => ({
+  card: {
+    margin: 10
+  }
+}));
+
+const Post = ({ post }) => {
+  const classes = useStyles();
+
+  return (
+    <Card className={classes.card}>
+      <CardHeader title={post.title} subheader={moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a')} />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {post.text}
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default Post;
