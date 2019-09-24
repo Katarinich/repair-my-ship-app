@@ -1,43 +1,45 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
+import 'dotenv/config';
 
-const books = [
-  {
-    title: "Harry Potter and the Sorcerer's stone",
-    author: 'J.K. Rowling',
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
-];
+import cors from 'cors';
+import morgan from 'morgan';
+import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
 
-const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
-`;
-
-const resolvers = {
-  Query: { books: () => books },
-};
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
+import schema from './schema';
+import resolvers from './resolvers';
+import models, { connectDb } from './models';
 
 const app = express();
 
-app.use('/', (req, res) => {
-  res.send('Hello World!');
-})
+app.use(cors());
 
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+app.use(morgan('dev'));
 
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+const server = new ApolloServer({
+  introspection: true,
+  typeDefs: schema,
+  resolvers,
+  formatError: error => {
+    const message = error.message
+      .replace('SequelizeValidationError: ', '')
+      .replace('Validation error: ', '');
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log('Go to http://localhost:3001/graphiql to run queries!');
+    return {
+      ...error,
+      message
+    };
+  },
+  context: () => ({
+    models
+  })
+});
+
+server.applyMiddleware({ app, path: '/graphql' });
+
+const port = process.env.PORT || 8000;
+
+connectDb().then(async () => {
+  app.listen({ port }, () => {
+    console.log(`Apollo Server on http://localhost:${port}/graphql`);
+  });
 });
