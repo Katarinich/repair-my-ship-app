@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import Posts from './seeders/posts.seeder';
 
-const mongoURL = process.env.DATABASE_URL || 'mongodb://localhost:27017/dbname';
+const mongoURL = process.env.MONGODB_URI || 'mongodb://localhost:27017/dbname';
 
 /**
  * Seeders List

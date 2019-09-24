@@ -3,15 +3,8 @@ import mongoose from 'mongoose';
 import Post from './post';
 
 const connectDb = () => {
-  if (process.env.TEST_DATABASE_URL) {
-    return mongoose.connect(process.env.TEST_DATABASE_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-  }
-
-  if (process.env.DATABASE_URL) {
-    return mongoose.connect(process.env.DATABASE_URL, {
+  if (process.env.MONGODB_URI) {
+    return mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
