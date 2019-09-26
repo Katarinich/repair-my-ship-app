@@ -7,12 +7,12 @@ import './app.scss';
 
 function App({ data }) {
   return (
-    <Grid container spacing={24} direction="column">
+    <Grid container direction="column">
       {data.posts &&
         data.posts.edges.map(post => (
-          <Grid container item spacing={0} justify="center">
+          <Grid container item spacing={0} justify="center" key={post.id}>
             <Grid item xs={12} md={6}>
-              <Post post={post} key={post.id} />
+              <Post post={post} />
             </Grid>
           </Grid>
         ))}
