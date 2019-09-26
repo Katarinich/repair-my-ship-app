@@ -21,15 +21,6 @@ export default class App extends Component {
   async componentDidMount() {
     const cache = new InMemoryCache();
 
-    const link = new HttpLink({
-      uri: process.env.REACT_APP_API_URI
-    });
-
-    const client = new ApolloClient({
-      cache,
-      link
-    });
-
     try {
       await persistCache({
         cache,
@@ -38,6 +29,15 @@ export default class App extends Component {
     } catch (error) {
       console.error('Error restoring Apollo cache', error);
     }
+
+    const link = new HttpLink({
+      uri: process.env.REACT_APP_API_URI
+    });
+
+    const client = new ApolloClient({
+      cache,
+      link
+    });
 
     this.setState({
       client,
