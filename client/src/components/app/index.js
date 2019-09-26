@@ -1,21 +1,3 @@
-import gql from 'graphql-tag';
-import { graphql } from '@apollo/react-hoc';
-
 import App from './app';
 
-export default graphql(gql`
-  query PostsQuery {
-    posts {
-      edges {
-        id
-        text
-        title
-        createdAt
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`)(App);
+export default App;

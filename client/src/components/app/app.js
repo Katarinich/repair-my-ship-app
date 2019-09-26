@@ -1,23 +1,64 @@
-import React from 'react';
-import { Grid } from '@material-ui/core';
+import React, { Component } from 'react';
 
-import Post from '../post';
+import { ApolloProvider } from '@apollo/react-hoc';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { persistCache } from 'apollo-cache-persist';
+import { ThemeProvider } from '@material-ui/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import './app.scss';
+import PostList from '../post-list';
 
-function App({ data }) {
-  return (
-    <Grid container direction="column">
-      {data.posts &&
-        data.posts.edges.map(post => (
-          <Grid container item spacing={0} justify="center" key={post.id}>
-            <Grid item xs={12} md={6}>
-              <Post post={post} />
-            </Grid>
-          </Grid>
-        ))}
-    </Grid>
-  );
+import theme from '../../theme';
+
+export default class App extends Component {
+  state = {
+    client: null,
+    loaded: false
+  };
+
+  async componentDidMount() {
+    const cache = new InMemoryCache();
+
+    const link = new HttpLink({
+      uri: process.env.REACT_APP_API_URI
+    });
+
+    const client = new ApolloClient({
+      cache,
+      link
+    });
+
+    try {
+      await persistCache({
+        cache,
+        storage: window.localStorage
+      });
+    } catch (error) {
+      console.error('Error restoring Apollo cache', error);
+    }
+
+    this.setState({
+      client,
+      loaded: true
+    });
+  }
+
+  render() {
+    const { client, loaded } = this.state;
+
+    if (!loaded) {
+      return <div>Loading...</div>;
+    }
+
+    return (
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <PostList />
+        </ThemeProvider>
+      </ApolloProvider>
+    );
+  }
 }
-
-export default App;
