@@ -7,7 +7,7 @@ cache:
 
 jobs:
   include:
-    - stage: deploying
+    - stage: client
       before_install: cd client
       install: yarn
       script:
@@ -26,7 +26,7 @@ jobs:
           app: repair-my-ship-staging
           on: 
             branch: develop
-    - stage: deploying
+    - stage: server
       before_install: cd server
       install: yarn
       deploy:
