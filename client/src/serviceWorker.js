@@ -54,6 +54,16 @@ export function register(config) {
   }
 }
 
+function forceSWupdate() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (let registration of registrations) {
+        registration.update();
+      }
+    });
+  }
+}
+
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
@@ -73,6 +83,8 @@ function registerValidSW(swUrl, config) {
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
               );
+
+              forceSWupdate();
 
               // Execute callback
               if (config && config.onUpdate) {
