@@ -7,7 +7,7 @@ if ('function' === typeof importScripts) {
     console.log('Workbox is loaded');
 
     workbox.routing.registerRoute(
-      new RegExp(/'**\/*.{js,css,html,png}'/),
+      /\.(?:js|css|html)$/,
       new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'js-cache',
         plugins: [
