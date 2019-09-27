@@ -6,28 +6,40 @@ if ('function' === typeof importScripts) {
   if (workbox) {
     console.log('Workbox is loaded');
 
+    workbox.routing.registerRoute(
+      new RegExp(/'**\/*.{js,css,html,png}'/),
+      new workbox.strategies.StaleWhileRevalidate({
+        cacheName: 'js-cache',
+        plugins: [
+          new workbox.expiration.Plugin({
+            maxAgeSeconds: 1 * 24 * 60 * 60,
+            maxEntries: 40
+          })
+        ]
+      })
+    );
+
     /* injection point for manifest files.  */
     workbox.precaching.precacheAndRoute([]);
 
-/* custom cache rules*/
-workbox.routing.registerNavigationRoute('/index.html', {
-      blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/],
+    /* custom cache rules*/
+    workbox.routing.registerNavigationRoute('/index.html', {
+      blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/]
     });
 
-workbox.routing.registerRoute(
+    workbox.routing.registerRoute(
       /\.(?:png|gif|jpg|jpeg)$/,
       workbox.strategies.cacheFirst({
         cacheName: 'images',
         plugins: [
           new workbox.expiration.Plugin({
             maxEntries: 60,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-          }),
-        ],
+            maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
+          })
+        ]
       })
     );
-
-} else {
+  } else {
     console.log('Workbox could not be loaded. No Offline support');
   }
 }
