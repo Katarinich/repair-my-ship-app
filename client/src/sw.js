@@ -3,11 +3,9 @@ if ('function' === typeof importScripts) {
     'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
   );
 
-  self.addEventListener('message', event => {
-    console.log(event)
-    if (event.data === 'skipWaiting') {
-      self.skipWaiting();
-    }
+  self.addEventListener('install', function(event) {
+    console.log('install')
+    self.skipWaiting();
   });
 
   /* global workbox */
