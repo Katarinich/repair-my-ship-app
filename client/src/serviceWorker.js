@@ -35,7 +35,7 @@ export function register(config) {
 }
 
 function forceSWupdate() {
-  console.log('forceSWupdate')
+  console.log('forceSWupdate');
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
       for (let registration of registrations) {
@@ -82,6 +82,11 @@ function registerValidSW(swUrl, config) {
                 config.onSuccess(registration);
               }
             }
+          }
+
+          if (installingWorker.state === 'waiting') {
+            console.log('waiting')
+            installingWorker.postMessage('skipWaiting');
           }
         };
       };

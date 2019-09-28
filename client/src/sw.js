@@ -1,14 +1,29 @@
 if ('function' === typeof importScripts) {
   importScripts(
-    'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js'
+    'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
   );
+
+  self.addEventListener('message', event => {
+    console.log(event)
+    if (event.data === 'skipWaiting') {
+      self.skipWaiting();
+    }
+  });
+
   /* global workbox */
   if (workbox) {
     console.log('Workbox is loaded');
 
+    workbox.precaching.precacheAndRoute([]);
+
+    // /* custom cache rules*/
+    workbox.routing.registerNavigationRoute('/index.html', {
+      blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/]
+    });
+
     workbox.routing.registerRoute(
       /\.(?:js|css|html)$/,
-      new workbox.strategies.StaleWhileRevalidate({
+      new workbox.strategies.NetworkFirst({
         cacheName: 'js-cache',
         plugins: [
           new workbox.expiration.Plugin({
@@ -18,14 +33,6 @@ if ('function' === typeof importScripts) {
         ]
       })
     );
-
-    /* injection point for manifest files.  */
-    workbox.precaching.precacheAndRoute([]);
-
-    /* custom cache rules*/
-    workbox.routing.registerNavigationRoute('/index.html', {
-      blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/]
-    });
 
     workbox.routing.registerRoute(
       /\.(?:png|gif|jpg|jpeg)$/,
