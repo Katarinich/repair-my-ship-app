@@ -20,17 +20,10 @@ if ('function' === typeof importScripts) {
     });
 
     workbox.routing.registerRoute(
-      /\.(?:js|css|html)$/,
-      new workbox.strategies.NetworkFirst({
-        cacheName: 'js-cache',
-        plugins: [
-          new workbox.expiration.Plugin({
-            maxAgeSeconds: 1 * 24 * 60 * 60,
-            maxEntries: 40
-          })
-        ]
-      })
+      new RegExp('/.*'),
+      new workbox.strategies.NetworkFirst()
     );
+    
 
     workbox.routing.registerRoute(
       /\.(?:png|gif|jpg|jpeg)$/,
