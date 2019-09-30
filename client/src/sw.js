@@ -3,8 +3,7 @@ if ('function' === typeof importScripts) {
     'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
   );
 
-  self.addEventListener('install', function(event) {
-    console.log('install')
+  self.addEventListener('install', function() {
     self.skipWaiting();
   });
 
@@ -14,16 +13,10 @@ if ('function' === typeof importScripts) {
 
     workbox.precaching.precacheAndRoute([]);
 
-    // /* custom cache rules*/
-    workbox.routing.registerNavigationRoute('/index.html', {
-      blacklist: [/^\/_/, /\/[^\/]+\.[^\/]+$/]
-    });
-
     workbox.routing.registerRoute(
       new RegExp('/.*'),
       new workbox.strategies.NetworkFirst()
     );
-    
 
     workbox.routing.registerRoute(
       /\.(?:png|gif|jpg|jpeg)$/,

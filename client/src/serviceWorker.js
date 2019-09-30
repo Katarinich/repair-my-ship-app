@@ -9,7 +9,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  if ('serviceWorker' in navigator) {
+  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
       return;
@@ -82,11 +82,6 @@ function registerValidSW(swUrl, config) {
                 config.onSuccess(registration);
               }
             }
-          }
-
-          if (installingWorker.state === 'waiting') {
-            console.log('waiting')
-            installingWorker.postMessage('skipWaiting');
           }
         };
       };
