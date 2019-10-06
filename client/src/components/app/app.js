@@ -7,8 +7,11 @@ import { HttpLink } from 'apollo-link-http';
 import { persistCache } from 'apollo-cache-persist';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import Header from '../header';
 import PostList from '../post-list';
+import CreateNewPost from '../create-new-post';
 
 import theme from '../../theme';
 
@@ -56,7 +59,20 @@ export default class App extends Component {
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <PostList />
+
+          <Router>
+            <Header />
+
+            <Switch>
+              <Route path="/create-new-post">
+                <CreateNewPost />
+              </Route>
+
+              <Route path="/">
+                <PostList />
+              </Route>
+            </Switch>
+          </Router>
         </ThemeProvider>
       </ApolloProvider>
     );
