@@ -12,10 +12,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   logo: {
-    maxWidth: 25
+    maxWidth: 40
   },
   button: {
     margin: theme.spacing(1)
@@ -29,7 +29,9 @@ export default function Header() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <img src={logo} alt="logo" className={classes.logo} />
+          <Link to="/">
+            <img src={logo} alt="logo" className={classes.logo} />
+          </Link>
 
           <Typography className={classes.title} variant="h6" noWrap>
             Repair My Ship

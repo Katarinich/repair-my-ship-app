@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CreateNewPost() {
+export default function CreateNewPost({ mutate }) {
   const classes = useStyles();
 
   return (
@@ -20,7 +20,7 @@ export default function CreateNewPost() {
         <Grid item xs={12} md={6}>
           <div className={classes.wrapper}>
             <Typography variant="h4">Create New Post</Typography>
-            <CreateNewPostForm />
+            <CreateNewPostForm onSubmit={mutate} />
           </div>
         </Grid>
       </Grid>

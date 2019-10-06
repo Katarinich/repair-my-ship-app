@@ -88,15 +88,18 @@ export default class CreateNewPostForm extends Component {
   }
 
   render() {
+    const { onSubmit } = this.props;
+
     return (
       <Formik
         initialValues={{ postText: '', postTitle: '' }}
         validationSchema={PostSchema}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+          onSubmit({
+            variables: { text: values.postText, title: values.postTitle }
+          }).then(() => {
             setSubmitting(false);
-          }, 400);
+          });
         }}
       >
         {({ isSubmitting }) => (
