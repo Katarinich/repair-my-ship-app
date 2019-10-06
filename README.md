@@ -6,12 +6,12 @@
 
 <h2 align="center">Roadmap</h2>
 
-* Implement server
-  * Connect mongodb
-  * Setup GraphQL
-  * Setup JWT Auth
-  * Setup security https://medium.com/@nodepractices/were-under-attack-23-node-js-security-best-practices-e33c146cb87d
+* Server
+  - [x] Connect mongodb
+  - [x] Setup GraphQL
+  - [ ] Setup JWT Auth
+  - [ ] Setup security https://medium.com/@nodepractices/were-under-attack-23-node-js-security-best-practices-e33c146cb87d
 
-* Implement client
-  * Setup offline
-  * Connect websockets
+* Client
+  - [x] Setup offline
+  - [ ] Connect websockets
