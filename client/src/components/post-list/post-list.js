@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Grid } from '@material-ui/core';
 
 import Post from '../post';
@@ -17,5 +19,17 @@ function PostList({ data }) {
     </Grid>
   );
 }
+
+PostList.propTypes = {
+  data: PropTypes.shape({
+    posts: PropTypes.shape({
+      edges: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string
+        })
+      )
+    })
+  }).isRequired
+};
 
 export default PostList;

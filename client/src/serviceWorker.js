@@ -1,3 +1,4 @@
+/* eslint-disable */
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -37,8 +38,8 @@ export function register(config) {
 function forceSWupdate() {
   console.log('forceSWupdate');
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for (let registration of registrations) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      for (const registration of registrations) {
         registration.update();
       }
     });

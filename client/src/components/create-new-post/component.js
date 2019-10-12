@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { Grid, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -21,12 +22,12 @@ class CreateNewPost extends Component {
   handleCreateNewPost(values) {
     const { mutate, history } = this.props;
 
-    mutate({
+    return mutate({
       variables: { text: values.postText, title: values.postTitle }
     }).then(({ data }) => {
       const { createPost } = data;
 
-      history.push(`/post/${createPost.id}`);
+      return history.push(`/post/${createPost.id}`);
     });
   }
 
@@ -47,5 +48,15 @@ class CreateNewPost extends Component {
     );
   }
 }
+
+CreateNewPost.propTypes = {
+  classes: PropTypes.shape({
+    wrapper: PropTypes.string.isRequired
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired,
+  mutate: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(CreateNewPost);
