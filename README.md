@@ -14,4 +14,9 @@
 
 * Client
   - [x] Setup offline
+  - [ ] Implement infinite scrolls
+  - [ ] Implement auth(orization/entication)
+  - [ ] Implement comments
+  - [ ] Implement rating system
+  - [ ] Implement dark theme switch
   - [ ] Connect websockets
