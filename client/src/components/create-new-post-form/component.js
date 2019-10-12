@@ -94,13 +94,7 @@ export default class CreateNewPostForm extends Component {
       <Formik
         initialValues={{ postText: '', postTitle: '' }}
         validationSchema={PostSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          onSubmit({
-            variables: { text: values.postText, title: values.postTitle }
-          }).then(() => {
-            setSubmitting(false);
-          });
-        }}
+        onSubmit={onSubmit}
       >
         {({ isSubmitting }) => (
           <Form>

@@ -1,29 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import CreateNewPostForm from '../create-new-post-form';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   wrapper: {
     margin: theme.spacing(1)
   }
-}));
+});
 
-export default function CreateNewPost({ mutate }) {
-  const classes = useStyles();
+class CreateNewPost extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <Grid container direction="column">
-      <Grid container item spacing={0} justify="center">
-        <Grid item xs={12} md={6}>
-          <div className={classes.wrapper}>
-            <Typography variant="h4">Create New Post</Typography>
-            <CreateNewPostForm onSubmit={mutate} />
-          </div>
+    this.handleCreateNewPost = this.handleCreateNewPost.bind(this);
+  }
+
+  handleCreateNewPost(values) {
+    const { mutate, history } = this.props;
+
+    mutate({
+      variables: { text: values.postText, title: values.postTitle }
+    }).then(({ data }) => {
+      const { createPost } = data;
+
+      history.push(`/post/${createPost.id}`);
+    });
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Grid container direction="column">
+        <Grid container item spacing={0} justify="center">
+          <Grid item xs={12} md={6}>
+            <div className={classes.wrapper}>
+              <Typography variant="h4">Create New Post</Typography>
+              <CreateNewPostForm onSubmit={this.handleCreateNewPost} />
+            </div>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  );
+    );
+  }
 }
+
+export default withStyles(styles)(CreateNewPost);

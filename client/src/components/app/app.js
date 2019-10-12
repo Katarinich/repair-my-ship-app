@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from '../header';
 import PostList from '../post-list';
+import ViewPost from '../view-post';
 import CreateNewPost from '../create-new-post';
 
 import theme from '../../theme';
@@ -64,9 +65,12 @@ export default class App extends Component {
             <Header />
 
             <Switch>
-              <Route path="/create-new-post">
-                <CreateNewPost />
-              </Route>
+              <Route path="/create-new-post" component={CreateNewPost} />
+
+              <Route
+                path="/post/:id"
+                children={({ match }) => <ViewPost id={match.params.id} />}
+              />
 
               <Route path="/">
                 <PostList />

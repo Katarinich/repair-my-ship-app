@@ -1,14 +1,24 @@
 import React from 'react';
 import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 import DateFormats from '../../constants/date-formats';
 
 import { formatDate } from '../../utils/moment';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   card: {
     margin: 10
+  },
+  cardTitle: {
+    '& a': {
+      color: theme.palette.secondary.main,
+      textDecoration: 'none',
+      '&:hover': {
+        textDecoration: 'underline'
+      }
+    }
   }
 }));
 
@@ -18,7 +28,8 @@ const Post = ({ post }) => {
   return (
     <Card className={classes.card}>
       <CardHeader
-        title={post.title}
+        classes={{ title: classes.cardTitle }}
+        title={<Link to={`/post/${post.id}`}>{post.title}</Link>}
         subheader={formatDate(post.createdAt, DateFormats.LONG_DATE_FORMAT)}
       />
       <CardContent>
