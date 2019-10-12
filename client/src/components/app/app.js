@@ -17,10 +17,14 @@ import CreateNewPost from '../create-new-post';
 import theme from '../../theme';
 
 export default class App extends Component {
-  state = {
-    client: null,
-    loaded: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      client: null,
+      loaded: false
+    };
+  }
 
   async componentDidMount() {
     const cache = new InMemoryCache();
@@ -69,7 +73,7 @@ export default class App extends Component {
 
               <Route
                 path="/post/:id"
-                children={({ match }) => <ViewPost id={match.params.id} />}
+                render={({ match }) => <ViewPost id={match.params.id} />}
               />
 
               <Route path="/">

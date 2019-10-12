@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { TextField, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField, Button } from '@material-ui/core';
 
 const CssTextField = withStyles(() => ({
   root: {
@@ -120,3 +121,7 @@ export default class CreateNewPostForm extends Component {
     );
   }
 }
+
+CreateNewPostForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+};

@@ -17,7 +17,7 @@ export default graphql(
   {
     options: props => ({
       variables: {
-        id: props.id,
+        id: props.id
       },
       fetchPolicy: 'cache-and-network'
     })
