@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import MainWrapper from '../main-wrapper';
+import PostWrapper from '../post-wrapper';
 import CreateNewPostForm from '../create-new-post-form';
 
 const styles = theme => ({
@@ -35,16 +37,14 @@ class CreateNewPost extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid container direction="column">
-        <Grid container item spacing={0} justify="center">
-          <Grid item xs={12} md={6}>
-            <div className={classes.wrapper}>
-              <Typography variant="h4">Create New Post</Typography>
-              <CreateNewPostForm onSubmit={this.handleCreateNewPost} />
-            </div>
-          </Grid>
-        </Grid>
-      </Grid>
+      <MainWrapper>
+        <PostWrapper>
+          <div className={classes.wrapper}>
+            <Typography variant="h4">Create New Post</Typography>
+            <CreateNewPostForm onSubmit={this.handleCreateNewPost} />
+          </div>
+        </PostWrapper>
+      </MainWrapper>
     );
   }
 }

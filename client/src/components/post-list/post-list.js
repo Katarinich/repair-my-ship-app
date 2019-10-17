@@ -1,22 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid } from '@material-ui/core';
-
 import Post from '../post';
+import MainWrapper from '../main-wrapper';
+import PostWrapper from '../post-wrapper';
 
 function PostList({ data }) {
   return (
-    <Grid container direction="column">
+    <MainWrapper>
       {data.posts &&
         data.posts.edges.map(post => (
-          <Grid container item spacing={0} justify="center" key={post.id}>
-            <Grid item xs={12} md={6}>
-              <Post post={post} />
-            </Grid>
-          </Grid>
+          <PostWrapper key={post.id}>
+            <Post post={post} />
+          </PostWrapper>
         ))}
-    </Grid>
+    </MainWrapper>
   );
 }
 
