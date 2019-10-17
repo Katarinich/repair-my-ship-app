@@ -84,6 +84,7 @@ export default class CreateNewPostForm extends Component {
         rowsMax="4"
         margin="normal"
         variant="outlined"
+        InputLabelProps={{ shrink: true }}
       />
     );
   }
@@ -97,7 +98,7 @@ export default class CreateNewPostForm extends Component {
         validationSchema={PostSchema}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, isValid }) => (
           <Form>
             <Field
               name="postTitle"
@@ -111,7 +112,7 @@ export default class CreateNewPostForm extends Component {
               variant="contained"
               color="default"
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isValid}
             >
               Submit
             </Button>

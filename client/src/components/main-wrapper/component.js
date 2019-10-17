@@ -14,7 +14,11 @@ MainWrapper.defaultProps = {
 };
 
 MainWrapper.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.string,
+    PropTypes.array
+  ])
 };
 
 export default MainWrapper;
