@@ -29,9 +29,11 @@ const server = new ApolloServer({
       message
     };
   },
-  context: () => ({
-    models
-  })
+  context: ({ req }) => {
+    const recaptcha = req.headers['g-recaptcha-response'];
+
+    return { models, recaptcha };
+  }
 });
 
 server.applyMiddleware({ app, path: '/graphql' });

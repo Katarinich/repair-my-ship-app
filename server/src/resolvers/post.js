@@ -1,7 +1,11 @@
-const toCursorHash = string => Buffer.from(string).toString("base64");
+import { AuthenticationError } from 'apollo-server-core';
+
+import { validateRecaptcha } from '../utils/recaptcha';
+
+const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
-  Buffer.from(string, "base64").toString("ascii");
+  Buffer.from(string, 'base64').toString('ascii');
 
 export default {
   Query: {
@@ -35,7 +39,13 @@ export default {
   },
 
   Mutation: {
-    createPost: async (parent, { text, title }, { models }) => {
+    createPost: async (parent, { text, title }, { models, recaptcha }) => {
+      const { data: validationResult } = await validateRecaptcha(recaptcha);
+
+      if (!validationResult.success) {
+        throw new AuthenticationError('Invalid reCAPTCHA');
+      }
+
       const post = await models.Post.create({
         text,
         title
