@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 
 const MainWrapper = ({ children }) => (
-  <Grid container direction="column">
+  <Grid container direction="column" wrap="nowrap">
     {children}
   </Grid>
 );
