@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 import { ApolloProvider } from '@apollo/react-hoc';
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import { persistCache } from 'apollo-cache-persist';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -15,6 +11,8 @@ import ViewPost from '../view-post';
 import CreateNewPost from '../create-new-post';
 
 import theme from '../../theme';
+
+import loadClient from '../../apollo/client';
 
 export default class App extends Component {
   constructor(props) {
@@ -27,25 +25,7 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    const cache = new InMemoryCache();
-
-    try {
-      await persistCache({
-        cache,
-        storage: window.localStorage
-      });
-    } catch (error) {
-      console.error('Error restoring Apollo cache', error);
-    }
-
-    const link = new HttpLink({
-      uri: process.env.REACT_APP_API_URI
-    });
-
-    const client = new ApolloClient({
-      cache,
-      link
-    });
+    const client = await loadClient();
 
     this.setState({
       client,

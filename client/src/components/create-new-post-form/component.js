@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
 
@@ -19,6 +20,12 @@ const CssTextField = withStyles(() => ({
   }
 }))(TextField);
 
+const styles = theme => ({
+  recaptchaWrapper: {
+    marginBottom: theme.spacing(1)
+  }
+});
+
 const PostSchema = Yup.object().shape({
   postTitle: Yup.string()
     .min(2, 'Too Short!')
@@ -27,12 +34,18 @@ const PostSchema = Yup.object().shape({
   postText: Yup.string().required('Required')
 });
 
-export default class CreateNewPostForm extends Component {
+class CreateNewPostForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      recaptcha: null
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.renderTextArea = this.renderTextArea.bind(this);
     this.renderTextInput = this.renderTextInput.bind(this);
+    this.handleRecaptchaChange = this.handleRecaptchaChange.bind(this);
   }
 
   getInputLabelByName(name) {
@@ -42,6 +55,17 @@ export default class CreateNewPostForm extends Component {
     };
 
     return labelsByName[name];
+  }
+
+  handleSubmit(values) {
+    const { onSubmit } = this.props;
+    const { recaptcha } = this.state;
+
+    onSubmit(values, recaptcha);
+  }
+
+  handleRecaptchaChange(value) {
+    this.setState({ recaptcha: value });
   }
 
   renderTextInput({ field, form }) {
@@ -90,13 +114,14 @@ export default class CreateNewPostForm extends Component {
   }
 
   render() {
-    const { onSubmit } = this.props;
+    const { classes } = this.props;
+    const { recaptcha } = this.state;
 
     return (
       <Formik
         initialValues={{ postText: '', postTitle: '' }}
         validationSchema={PostSchema}
-        onSubmit={onSubmit}
+        onSubmit={this.handleSubmit}
       >
         {({ isSubmitting, isValid }) => (
           <Form>
@@ -108,11 +133,18 @@ export default class CreateNewPostForm extends Component {
 
             <Field name="postText" render={this.renderTextArea} />
 
+            <div className={classes.recaptchaWrapper}>
+              <ReCAPTCHA
+                sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_API_KEY}
+                onChange={this.handleRecaptchaChange}
+              />
+            </div>
+
             <Button
               variant="contained"
               color="default"
               type="submit"
-              disabled={isSubmitting || !isValid}
+              disabled={isSubmitting || !isValid || !recaptcha}
             >
               Submit
             </Button>
@@ -124,5 +156,9 @@ export default class CreateNewPostForm extends Component {
 }
 
 CreateNewPostForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.shape({ recaptchaWrapper: PropTypes.string.isRequired })
+    .isRequired
 };
+
+export default withStyles(styles)(CreateNewPostForm);

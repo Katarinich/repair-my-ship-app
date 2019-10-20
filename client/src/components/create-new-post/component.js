@@ -21,11 +21,15 @@ class CreateNewPost extends Component {
     this.handleCreateNewPost = this.handleCreateNewPost.bind(this);
   }
 
-  handleCreateNewPost(values) {
+  handleCreateNewPost(values, recaptcha) {
     const { mutate, history } = this.props;
 
     return mutate({
-      variables: { text: values.postText, title: values.postTitle }
+      variables: {
+        text: values.postText,
+        title: values.postTitle
+      },
+      context: { recaptcha }
     }).then(({ data }) => {
       const { createPost } = data;
 
