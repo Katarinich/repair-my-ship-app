@@ -3,10 +3,12 @@ import { graphql } from '@apollo/react-hoc';
 
 import PostList from './post-list';
 
+import { DEFAULT_POST_LIST_LIMIT } from '../../constants';
+
 export default graphql(
   gql`
-    query PostsQuery {
-      posts {
+    query PostsQuery($cursor: String, $limit: Int!) {
+      posts(cursor: $cursor, limit: $limit) {
         edges {
           id
           text
@@ -21,6 +23,11 @@ export default graphql(
     }
   `,
   {
-    options: { fetchPolicy: 'cache-and-network' }
+    options: {
+      variables: {
+        limit: DEFAULT_POST_LIST_LIMIT
+      },
+      fetchPolicy: 'cache-and-network'
+    }
   }
 )(PostList);
