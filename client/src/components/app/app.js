@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ApolloProvider } from '@apollo/react-hoc';
 import { ThemeProvider } from '@material-ui/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { CssBaseline, Toolbar } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from '../header';
@@ -13,6 +13,7 @@ import CreateNewPost from '../create-new-post';
 import theme from '../../theme';
 
 import loadClient from '../../apollo/client';
+import HideOnScroll from '../hide-on-scroll';
 import OfflineMessage from '../offline-message';
 
 export default class App extends Component {
@@ -47,7 +48,11 @@ export default class App extends Component {
           <CssBaseline />
 
           <Router>
-            <Header />
+            <HideOnScroll>
+              <Header />
+            </HideOnScroll>
+
+            <Toolbar />
 
             <Switch>
               <Route path="/create-new-post" component={CreateNewPost} />

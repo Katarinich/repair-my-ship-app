@@ -22,33 +22,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Header() {
+const Header = (props, ref) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <Link to="/">
-            <img src={logo} alt="logo" className={classes.logo} />
-          </Link>
+    <AppBar ref={ref}>
+      <Toolbar>
+        <Link to="/">
+          <img src={logo} alt="logo" className={classes.logo} />
+        </Link>
 
-          <Typography className={classes.title} variant="h6" noWrap>
-            Repair My Ship
-          </Typography>
+        <Typography className={classes.title} variant="h6" noWrap>
+          Repair My Ship
+        </Typography>
 
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            startIcon={<AddIcon />}
-            component={Link}
-            to="/create-new-post"
-          >
-            Add Post
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          startIcon={<AddIcon />}
+          component={Link}
+          to="/create-new-post"
+        >
+          Add Post
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
+
+export default React.forwardRef(Header);
