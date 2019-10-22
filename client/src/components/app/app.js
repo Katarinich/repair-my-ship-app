@@ -13,6 +13,7 @@ import CreateNewPost from '../create-new-post';
 import theme from '../../theme';
 
 import loadClient from '../../apollo/client';
+import OfflineMessage from '../offline-message';
 
 export default class App extends Component {
   constructor(props) {
@@ -60,6 +61,8 @@ export default class App extends Component {
                 <PostList />
               </Route>
             </Switch>
+
+            <OfflineMessage />
           </Router>
         </ThemeProvider>
       </ApolloProvider>
