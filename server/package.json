@@ -1,6 +1,6 @@
 {
   "name": "repair-my-ship-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A server app for Repair My Ship ",
   "main": "index.js",
   "author": "Katarinich",
