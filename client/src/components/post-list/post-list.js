@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Post from '../post';
@@ -10,7 +11,14 @@ import MainWrapper from '../main-wrapper';
 import PostWrapper from '../post-wrapper';
 import CenteringWrapper from '../centering-wrapper';
 
-export default class PostList extends Component {
+const styles = theme => ({
+  loaderWrapper: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3)
+  }
+});
+
+class PostList extends Component {
   constructor(props) {
     super(props);
 
@@ -54,7 +62,8 @@ export default class PostList extends Component {
 
   render() {
     const {
-      data: { posts, loading }
+      data: { posts, loading },
+      classes
     } = this.props;
 
     return (
@@ -73,7 +82,11 @@ export default class PostList extends Component {
             ))}
         </InfiniteScroll>
 
-        {loading && <Loader />}
+        {loading && (
+          <div className={classes.loaderWrapper}>
+            <Loader />
+          </div>
+        )}
       </MainWrapper>
     );
   }
@@ -86,7 +99,17 @@ PostList.propTypes = {
         PropTypes.shape({
           id: PropTypes.string
         })
-      )
-    })
-  }).isRequired
+      ),
+      pageInfo: PropTypes.shape({
+        endCursor: PropTypes.string,
+        hasNextPage: PropTypes.bool.isRequired
+      }).isRequired
+    }),
+    loading: PropTypes.bool.isRequired,
+    fetchMore: PropTypes.func.isRequired
+  }).isRequired,
+  classes: PropTypes.shape({ loaderWrapper: PropTypes.string.isRequired })
+    .isRequired
 };
+
+export default withStyles(styles)(PostList);
