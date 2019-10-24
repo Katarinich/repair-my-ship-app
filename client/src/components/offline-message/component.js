@@ -10,6 +10,10 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     left: 0,
     bottom: 0,
+    zIndex: 10000,
+    [theme.breakpoints.down('sm')]: {
+      bottom: theme.spacing(7)
+    },
     opacity: 0.8,
     backgroundColor: theme.palette.secondary.main,
     width: '100%',

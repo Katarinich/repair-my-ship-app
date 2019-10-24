@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ApolloProvider } from '@apollo/react-hoc';
 import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline, Toolbar, Fab } from '@material-ui/core';
+import { CssBaseline, Toolbar, Fab, Hidden } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -13,10 +13,11 @@ import CreateNewPost from '../create-new-post';
 
 import theme from '../../theme';
 
+import ScrollToTop from '../scroll-to-top';
 import loadClient from '../../apollo/client';
 import HideOnScroll from '../hide-on-scroll';
 import OfflineMessage from '../offline-message';
-import ScrollToTop from '../scroll-to-top/component';
+import BottomNavigation from '../bottom-navigation';
 
 export default class App extends Component {
   constructor(props) {
@@ -69,8 +70,6 @@ export default class App extends Component {
               </Route>
             </Switch>
 
-            <OfflineMessage />
-
             <ScrollToTop anchorSelector="#back-to-top-anchor">
               <Fab
                 color="secondary"
@@ -80,6 +79,16 @@ export default class App extends Component {
                 <KeyboardArrowUpIcon />
               </Fab>
             </ScrollToTop>
+
+            <Hidden mdUp>
+              <Toolbar />
+            </Hidden>
+
+            <OfflineMessage />
+
+            <Hidden mdUp>
+              <BottomNavigation />
+            </Hidden>
           </Router>
         </ThemeProvider>
       </ApolloProvider>
