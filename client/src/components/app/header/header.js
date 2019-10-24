@@ -109,7 +109,9 @@ const Header = (props, ref) => {
 
           <Button color="inherit">Sign In</Button>
           <Typography variant="body2">|</Typography>
-          <Button color="inherit">Sign Up</Button>
+          <Button color="inherit" component={Link} to="/sign-up">
+            Sign Up
+          </Button>
         </Hidden>
       </Toolbar>
     </AppBar>

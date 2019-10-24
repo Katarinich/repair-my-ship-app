@@ -5,9 +5,9 @@ import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
-import DateFormats from '../../constants/date-formats';
+import DateFormats from '../../../constants/date-formats';
 
-import { formatDate } from '../../utils/moment';
+import { formatDate } from '../../../utils/moment';
 
 const useStyles = makeStyles(theme => ({
   card: {

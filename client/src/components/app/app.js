@@ -6,18 +6,18 @@ import { CssBaseline, Toolbar, Fab, Hidden } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Header from '../header';
+import Header from './header';
 import PostList from '../post-list';
 import ViewPost from '../view-post';
 import CreateNewPost from '../create-new-post';
 
 import theme from '../../theme';
 
-import ScrollToTop from '../scroll-to-top';
+import ScrollToTop from './scroll-to-top';
 import loadClient from '../../apollo/client';
-import HideOnScroll from '../hide-on-scroll';
-import OfflineMessage from '../offline-message';
-import BottomNavigation from '../bottom-navigation';
+import HideOnScroll from './hide-on-scroll';
+import OfflineMessage from './offline-message';
+import BottomNavigation from './bottom-navigation';
 
 export default class App extends Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import React from 'react';
 import { Offline } from 'react-detect-offline';
 import { Typography, makeStyles } from '@material-ui/core';
 
-import CenteringWrapper from '../centering-wrapper';
+import CenteringWrapper from '../../common/centering-wrapper';
 
 const useStyles = makeStyles(theme => ({
   root: {

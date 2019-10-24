@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-import MainWrapper from '../main-wrapper';
-import PostWrapper from '../post-wrapper';
-import CreateNewPostForm from '../create-new-post-form';
+import MainWrapper from '../common/main-wrapper';
+import PostWrapper from '../common/post-wrapper';
+import CreateNewPostForm from './create-new-post-form';
 
 const styles = theme => ({
   wrapper: {
