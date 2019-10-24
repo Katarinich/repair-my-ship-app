@@ -22,6 +22,7 @@
   - [ ] Implement CRUD for posts
   - [ ] Implement CRUD for comments
   - [ ] Implement rating system
+  - [ ] Implement search
   - [ ] Implement dark theme switch
   - [ ] Push notifications
   - [ ] Connect websockets
