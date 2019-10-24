@@ -26,3 +26,4 @@
   - [ ] Implement dark theme switch
   - [ ] Push notifications
   - [ ] Connect websockets
+  - [ ] Implement Int
