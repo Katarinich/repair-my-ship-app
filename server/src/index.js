@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import morgan from 'morgan';
 import express from 'express';
+import jwt from 'jsonwebtoken';
 import { ApolloServer } from 'apollo-server-express';
 
 import schema from './schema';
@@ -11,9 +12,39 @@ import models, { connectDb } from './models';
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: 'x-token'
+  })
+);
 
 app.use(morgan('dev'));
+
+app.use(async (req, res, next) => {
+  const token = req.headers['x-token'];
+
+  if (token) {
+    try {
+      await jwt.verify(token, process.env.SECRET);
+
+      res.setHeader('x-token', token);
+    } catch (e) {
+      next();
+    }
+  }
+
+  next();
+});
+
+const getUser = async token => {
+  if (token) {
+    try {
+      return await jwt.verify(token, process.env.SECRET);
+    } catch (e) {
+      return null;
+    }
+  }
+};
 
 const server = new ApolloServer({
   introspection: true,
@@ -29,10 +60,13 @@ const server = new ApolloServer({
       message
     };
   },
-  context: ({ req }) => {
+  context: async ({ req }) => {
     const recaptcha = req.headers['g-recaptcha-response'];
+    const token = req.headers['x-token'];
 
-    return { models, recaptcha };
+    const user = await getUser(token);
+
+    return { models, recaptcha, user, secret: process.env.SECRET };
   }
 });
 
