@@ -3,13 +3,17 @@ import React from 'react';
 import { Offline } from 'react-detect-offline';
 import { Typography, makeStyles } from '@material-ui/core';
 
-import CenteringWrapper from '../centering-wrapper';
+import CenteringWrapper from '../../common/centering-wrapper';
 
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'fixed',
     left: 0,
     bottom: 0,
+    zIndex: 10000,
+    [theme.breakpoints.down('sm')]: {
+      bottom: theme.spacing(7)
+    },
     opacity: 0.8,
     backgroundColor: theme.palette.secondary.main,
     width: '100%',

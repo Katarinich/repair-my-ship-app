@@ -44,6 +44,9 @@
     "react/jsx-one-expression-per-line": "off",
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "import/prefer-default-export": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
+    "promise/always-return": "off",
+    "react/display-name": "off"
   }
 }

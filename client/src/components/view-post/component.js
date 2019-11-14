@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { CircularProgress, Paper } from '@material-ui/core';
 
-import Post from '../post';
-import MainWrapper from '../main-wrapper';
-import PostWrapper from '../post-wrapper';
+import Post from '../common/post';
+import MainWrapper from '../common/main-wrapper';
+import PostWrapper from '../common/post-wrapper';
 
 const ViewPost = ({ data }) => (
   <MainWrapper>

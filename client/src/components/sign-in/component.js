@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import SignInForm from './sign-in-form';
 import MainWrapper from '../common/main-wrapper';
 import PostWrapper from '../common/post-wrapper';
-import CreateNewPostForm from './create-new-post-form';
 
 const styles = theme => ({
   wrapper: {
@@ -14,27 +14,34 @@ const styles = theme => ({
   }
 });
 
-class CreateNewPost extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
 
-    this.handleCreateNewPost = this.handleCreateNewPost.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
-  handleCreateNewPost(values, recaptcha) {
-    const { mutate, history } = this.props;
+  handleSignIn(values, setSubmitting) {
+    const { signIn, history, setUser } = this.props;
 
-    return mutate({
+    return signIn({
       variables: {
-        text: values.postText,
-        title: values.postTitle
-      },
-      context: { recaptcha }
-    }).then(({ data }) => {
-      const { createPost } = data;
+        login: values.login,
+        password: values.password
+      }
+    })
+      .then(({ data }) => {
+        const { token } = data.signIn;
 
-      return history.push(`/post/${createPost.id}`);
-    });
+        setUser({
+          variables: {
+            token
+          }
+        });
+
+        history.push('/');
+      })
+      .catch(() => setSubmitting(false));
   }
 
   render() {
@@ -44,8 +51,8 @@ class CreateNewPost extends Component {
       <MainWrapper>
         <PostWrapper>
           <div className={classes.wrapper}>
-            <Typography variant="h4">Create New Post</Typography>
-            <CreateNewPostForm onSubmit={this.handleCreateNewPost} />
+            <Typography variant="h4">Sign In</Typography>
+            <SignInForm onSubmit={this.handleSignIn} />
           </div>
         </PostWrapper>
       </MainWrapper>
@@ -53,14 +60,15 @@ class CreateNewPost extends Component {
   }
 }
 
-CreateNewPost.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.shape({
     wrapper: PropTypes.string.isRequired
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
-  mutate: PropTypes.func.isRequired
+  signIn: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(CreateNewPost);
+export default withStyles(styles)(SignIn);

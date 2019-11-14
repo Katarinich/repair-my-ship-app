@@ -5,11 +5,11 @@ import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import Post from '../post';
-import Loader from '../loader';
-import MainWrapper from '../main-wrapper';
-import PostWrapper from '../post-wrapper';
-import CenteringWrapper from '../centering-wrapper';
+import Post from '../common/post';
+import Loader from '../common/loader';
+import MainWrapper from '../common/main-wrapper';
+import PostWrapper from '../common/post-wrapper';
+import CenteringWrapper from '../common/centering-wrapper';
 
 const styles = theme => ({
   loaderWrapper: {

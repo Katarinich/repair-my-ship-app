@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import Post from './post';
+import User from './user';
 
 const connectDb = () => {
   if (process.env.MONGODB_URI) {
@@ -11,7 +12,7 @@ const connectDb = () => {
   }
 };
 
-const models = { Post };
+const models = { Post, User };
 
 export { connectDb };
 
