@@ -36,10 +36,10 @@ app.use(async (req, res, next) => {
   next();
 });
 
-const getUser = async token => {
+const getUser = token => {
   if (token) {
     try {
-      return await jwt.verify(token, process.env.SECRET);
+      return jwt.verify(token, process.env.SECRET);
     } catch (e) {
       return null;
     }
@@ -64,7 +64,7 @@ const server = new ApolloServer({
     const recaptcha = req.headers['g-recaptcha-response'];
     const token = req.headers['x-token'];
 
-    const user = await getUser(token);
+    const user = getUser(token);
 
     return { models, recaptcha, user, secret: process.env.SECRET };
   }

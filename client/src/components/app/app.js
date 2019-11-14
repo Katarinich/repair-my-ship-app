@@ -2,22 +2,25 @@ import React, { Component } from 'react';
 
 import { ApolloProvider } from '@apollo/react-hoc';
 import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline, Toolbar, Fab, Hidden } from '@material-ui/core';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { CssBaseline, Toolbar, Fab, Hidden } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from './header';
+import SignIn from '../sign-in';
+import SignUp from '../sign-up';
 import PostList from '../post-list';
 import ViewPost from '../view-post';
+import ScrollToTop from './scroll-to-top';
+import HideOnScroll from './hide-on-scroll';
+import OfflineMessage from './offline-message';
 import CreateNewPost from '../create-new-post';
+import BottomNavigation from './bottom-navigation';
 
 import theme from '../../theme';
 
-import ScrollToTop from './scroll-to-top';
 import loadClient from '../../apollo/client';
-import HideOnScroll from './hide-on-scroll';
-import OfflineMessage from './offline-message';
-import BottomNavigation from './bottom-navigation';
+import accessControl from '../../utils/access-control';
 
 export default class App extends Component {
   constructor(props) {
@@ -31,6 +34,8 @@ export default class App extends Component {
 
   async componentDidMount() {
     const client = await loadClient();
+
+    accessControl.init(client);
 
     this.setState({
       client,
@@ -64,6 +69,10 @@ export default class App extends Component {
                 path="/post/:id"
                 render={({ match }) => <ViewPost id={match.params.id} />}
               />
+
+              <Route path="/sign-up" component={SignUp} />
+
+              <Route path="/sign-in" component={SignIn} />
 
               <Route path="/">
                 <PostList />

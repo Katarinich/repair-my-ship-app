@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { AppBar, BottomNavigation, withStyles } from '@material-ui/core';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import {
+  AppBar,
+  BottomNavigation,
+  BottomNavigationAction,
+  withStyles,
+  SvgIcon
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import accessControl from '../../../utils/access-control';
+
+import { ReactComponent as CruiseIcon } from './cruise.svg';
+import { ReactComponent as SignOutIcon } from './logout.svg';
 
 const styles = theme => ({
   root: {
@@ -22,7 +31,21 @@ const styles = theme => ({
 
 class BottomNavigationComponent extends Component {
   render() {
-    const { classes, location } = this.props;
+    const { classes, location, signOut } = this.props;
+
+    const isAuthenticated = accessControl.isAuthenticated();
+
+    const homeIcon = (
+      <SvgIcon>
+        <CruiseIcon />
+      </SvgIcon>
+    );
+
+    const signOutIcon = (
+      <SvgIcon>
+        <SignOutIcon />
+      </SvgIcon>
+    );
 
     return (
       <AppBar position="fixed" color="primary" className={classes.root}>
@@ -32,13 +55,25 @@ class BottomNavigationComponent extends Component {
           showLabels
           className={classes.bottomNavigation}
         >
-          <BottomNavigationAction
-            component={Link}
-            to="/sign-up"
-            value="/sign-up"
-            label="Sign Up"
-            icon={<PersonAddIcon />}
-          />
+          {!isAuthenticated && (
+            <BottomNavigationAction
+              component={Link}
+              to="/sign-up"
+              value="/sign-up"
+              label="Sign Up"
+              icon={<PersonAddIcon />}
+            />
+          )}
+
+          {isAuthenticated && (
+            <BottomNavigationAction
+              component={Link}
+              to="/"
+              value="/"
+              label="Home"
+              icon={homeIcon}
+            />
+          )}
 
           <BottomNavigationAction
             component={Link}
@@ -48,13 +83,24 @@ class BottomNavigationComponent extends Component {
             icon={<AddIcon />}
           />
 
-          <BottomNavigationAction
-            component={Link}
-            to="/sign-in"
-            value="/sign-in"
-            label="Sign In"
-            icon={<ExitToAppIcon />}
-          />
+          {isAuthenticated && (
+            <BottomNavigationAction
+              value="/logout"
+              label="Logout"
+              icon={signOutIcon}
+              onClick={signOut}
+            />
+          )}
+
+          {!isAuthenticated && (
+            <BottomNavigationAction
+              component={Link}
+              to="/sign-in"
+              value="/sign-in"
+              label="Sign In"
+              icon={<ExitToAppIcon />}
+            />
+          )}
         </BottomNavigation>
       </AppBar>
     );
@@ -68,7 +114,8 @@ BottomNavigationComponent.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  signOut: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(BottomNavigationComponent);
